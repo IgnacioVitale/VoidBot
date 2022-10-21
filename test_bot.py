@@ -2,9 +2,11 @@ import discord
 
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 
 client = discord.Client(intents=intents)
 
+bot_prefix = './'
 
 @client.event
 async def on_ready():
@@ -13,10 +15,26 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    message_content = message.content
+    # we get the channel members
+    member_list = client.get_channel(message.channel.id).members
+
+    # if the message is from the bot, we ignore it
     if message.author == client.user:
         return
 
-    if message.content.startswith('./hello'):
+# greet command: greets the user, mentioning it. it can take both name and nickname
+    if message_content.startswith(f'{bot_prefix}greet'):
+        # we take the first word after ./greet
+        name = message_content.split(" ")[1]
+
+        # we search in the member_list for the name, both in nicknames and in names
+        for member in member_list:
+            if name.lower() == member.name.lower() or name.lower() == member.display_name.lower():
+                await message.channel.send(f"Sup <@{member.id}>")
+
+# hello command: says hi
+    if message_content.startswith('./hello'):
         await message.channel.send('Sup fam')
 
 
@@ -26,6 +44,7 @@ async def on_message_delete(message):
         await message.channel.send('Me estan censurando en vivo')
     else:
         await message.channel.send('Vi lo que borraste, picaron')
+
 
 
 client.run('MTAzMjk2NTY5OTYyMDA1MzA1Mw.GR4Qke.xLPeqa18P8xFBzK5rtCV-VgG9hA8PTZR0nSUZ0')
