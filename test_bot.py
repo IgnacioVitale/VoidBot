@@ -1,4 +1,3 @@
-from sys import prefix
 import discord
 from discord.ext import commands
 from dotenv import dotenv_values
@@ -35,8 +34,8 @@ async def on_message(message):
     # We grab the first word which determines the command.
     command = message_content.split(" ")[0]
 
-    # If the message does not start with the predix OR from the bot, return.
-    if command[:2] != prefix or message.author == bot.user:
+    # If the message does not start with the predix OR is from the bot, return.
+    if command[:2] != bot_prefix or message.author == bot.user:
         return
 
     ## We already checked for the prefix, we simply take the command.
@@ -50,7 +49,9 @@ async def on_message(message):
         case "allstar":
             await all_star(message)
         case "hello":
-            await message.channel.send('Sup fam')
+            await greet(message)
+        # case "roll":
+            # await roll(message):
         case _:
             return
 
