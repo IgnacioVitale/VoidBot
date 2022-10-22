@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from dotenv import dotenv_values
 
-from DiscordBot.on_message_helpers.coin_flip import coin_flip
+from on_message_helpers.coin_flip import coin_flip
 from on_message_helpers.all_star import all_star
 from utils import *
 
