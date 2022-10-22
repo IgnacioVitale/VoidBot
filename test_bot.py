@@ -1,5 +1,8 @@
 import discord
+from dotenv import dotenv_values
 
+config = dotenv_values('.env')
+discord_api_key = config['DISCORD_API_KEY']
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
@@ -47,4 +50,5 @@ async def on_message_delete(message):
 
 
 
-client.run('MTAzMjk2NTY5OTYyMDA1MzA1Mw.GR4Qke.xLPeqa18P8xFBzK5rtCV-VgG9hA8PTZR0nSUZ0')
+client.run(discord_api_key)
+
