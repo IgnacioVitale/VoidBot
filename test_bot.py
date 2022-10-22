@@ -1,8 +1,9 @@
+from sys import prefix
 import discord
 from discord.ext import commands
 from dotenv import dotenv_values
 from on_message_helpers.all_star import all_star
-
+from on_message_helpers.greet import greet
 config = dotenv_values('.env')
 discord_api_key = config['DISCORD_API_KEY']
 intents = discord.Intents.default()
@@ -21,7 +22,6 @@ async def greet(ctx, *names):
         if name.lower() == member.name.lower() or name.lower() == member.display_name.lower():
             await ctx.channel.send(f"Sup <@{member.id}>")
 
-
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
@@ -31,21 +31,28 @@ async def on_ready():
 async def on_message(message):
     await bot.process_commands(message)
     message_content = message.content
+
+    # We grab the first word which determines the command.
     command = message_content.split(" ")[0]
-    # we get the channel members
+
+    # If the message does not start with the predix OR from the bot, return.
+    if command[:2] != prefix or message.author == bot.user:
+        return
+
+    ## We already checked for the prefix, we simply take the command.
+    command = command[2:]
+
+    # Get the member list.
     member_list = bot.get_channel(message.channel.id).members
 
-    # if the message is from the bot, we ignore it
-    if message.author == bot.user:
-        return
-
-    if command == f"{bot_prefix}allstar":
-        await all_star(message)
-        return
-
-    # hello command: says hi
-    if message_content.startswith('./hello'):
-        await message.channel.send('Sup fam')
+    # Match the 'commmand' to a specific function called from the 'on_message_helpers' directory
+    match command:
+        case "allstar":
+            await all_star(message)
+        case "hello":
+            await message.channel.send('Sup fam')
+        case _:
+            return
 
 
 @bot.event
