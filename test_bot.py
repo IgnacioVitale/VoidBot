@@ -1,6 +1,6 @@
 import discord
 from dotenv import dotenv_values
-
+from on_message_helpers.all_star import all_star
 config = dotenv_values('.env')
 discord_api_key = config['DISCORD_API_KEY']
 intents = discord.Intents.default()
@@ -20,14 +20,19 @@ async def on_ready():
 @client.event
 async def on_message(message):
     message_content = message.content
+    command = message_content.split(" ")[0]
     # we get the channel members
     member_list = client.get_channel(message.channel.id).members
 
     # if the message is from the bot, we ignore it
     if message.author == client.user:
         return
+ 
 
-    # greet command: greets the user, mentioning it. it can take both name and nickname
+    if command == f"{bot_prefix}allstar":
+        await all_star(message)
+        return
+# greet command: greets the user, mentioning it. it can take both name and nickname
     if message_content.startswith(f'{bot_prefix}greet'):
         # we take the first word after ./greet
         name = message_content.split(" ")[1]
