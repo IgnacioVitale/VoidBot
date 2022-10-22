@@ -4,8 +4,12 @@ Discord bot coded in Python.
 Setup
 
 install python 3.8 or higher
-install discord.py library:
-    in Windows, open cmd and type py -3 -m pip install -U discord.py
+
+Libraries: 
+discord
+python-dotenv
+
+in Windows, open cmd and type py -3 -m pip install -U discord.py
 
 
 
