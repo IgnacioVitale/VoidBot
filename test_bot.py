@@ -1,10 +1,11 @@
 import discord
 from discord.ext import commands
 from dotenv import dotenv_values
+
 from on_message_helpers.all_star import all_star
+from utils import *
 
 config = dotenv_values('.env')
-discord_api_key = config['DISCORD_API_KEY']
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
@@ -19,7 +20,14 @@ async def greet(ctx, *names):
     member_list = bot.get_channel(ctx.channel.id).members
     for member in member_list:
         if name.lower() == member.name.lower() or name.lower() == member.display_name.lower():
-            await ctx.channel.send(f"Sup <@{member.id}>")
+            await ctx.channel.send(f"Sup {mention_id(member.id)}")
+
+
+@bot.command()
+async def love(ctx: commands.Context):
+    user = ctx.message.author.id
+    new_msg = await ctx.channel.send(f"I love you {mention_id(user)}")
+    await new_msg.add_reaction('❤️')
 
 
 @bot.event
@@ -32,8 +40,6 @@ async def on_message(message):
     await bot.process_commands(message)
     message_content = message.content
     command = message_content.split(" ")[0]
-    # we get the channel members
-    member_list = bot.get_channel(message.channel.id).members
 
     # if the message is from the bot, we ignore it
     if message.author == bot.user:
@@ -63,4 +69,5 @@ async def on_command_error(ctx, error):
         return
     raise error
 
-bot.run(discord_api_key)
+
+bot.run(config['DISCORD_API_KEY'])
