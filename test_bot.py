@@ -35,29 +35,14 @@ async def love(ctx: commands.Context):
 async def coinflip(ctx):
     await coin_flip(ctx)
 
+@bot.command()
+async def allstar(ctx):
+    await all_star(ctx)
+
 
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
-
-
-@bot.event
-async def on_message(message):
-    await bot.process_commands(message)
-    message_content = message.content
-    command = message_content.split(" ")[0]
-
-    # if the message is from the bot, we ignore it
-    if message.author == bot.user:
-        return
-
-    if command == f"{bot_prefix}allstar":
-        await all_star(message)
-        return
-
-    # hello command: says hi
-    if message_content.startswith('./hello'):
-        await message.channel.send('Sup fam')
 
 
 @bot.event
