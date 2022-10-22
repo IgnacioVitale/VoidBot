@@ -11,6 +11,7 @@ client = discord.Client(intents=intents)
 
 bot_prefix = './'
 
+
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
@@ -26,7 +27,7 @@ async def on_message(message):
     # if the message is from the bot, we ignore it
     if message.author == client.user:
         return
-
+ 
 
     if command == f"{bot_prefix}allstar":
         await all_star(message)
@@ -41,7 +42,7 @@ async def on_message(message):
             if name.lower() == member.name.lower() or name.lower() == member.display_name.lower():
                 await message.channel.send(f"Sup <@{member.id}>")
 
-# hello command: says hi
+    # hello command: says hi
     if message_content.startswith('./hello'):
         await message.channel.send('Sup fam')
 
@@ -54,6 +55,4 @@ async def on_message_delete(message):
         await message.channel.send('Vi lo que borraste, picaron')
 
 
-
 client.run(discord_api_key)
-
