@@ -16,18 +16,12 @@ bot = commands.Bot(intents=intents, command_prefix=bot_prefix)
 
 @bot.command()
 async def greet(ctx, *names):
-    name = ' '.join(names)
-    member_list = bot.get_channel(ctx.channel.id).members
-    for member in member_list:
-        if name.lower() == member.name.lower() or name.lower() == member.display_name.lower():
-            await ctx.channel.send(f"Sup {mention_id(member.id)}")
-
+    await greet_user(ctx, *names)
+   
 
 @bot.command()
 async def love(ctx: commands.Context):
-    user = ctx.message.author.id
-    new_msg = await ctx.channel.send(f"I love you {mention_id(user)}")
-    await new_msg.add_reaction('❤️')
+    await love_user(ctx)
 
 
 @bot.command()

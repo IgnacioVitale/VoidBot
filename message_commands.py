@@ -16,3 +16,20 @@ async def coin_flip(ctx):
         await ctx.channel.send(f"{mention_id(user)} Your coin landed on {coin_head}")
     else:
         await ctx.channel.send(f"{mention_id(user)} Your coin landed on {coin_tails}")
+
+
+async def greet_user(ctx, *names):
+    name = ' '.join(names)
+    members = ctx.message.channel.members
+    # member_list = ctx.get_channel(ctx.channel.id).members
+    for member in members:
+        if name.lower() == member.name.lower() or name.lower() == member.display_name.lower():
+            await ctx.channel.send(f"Sup {mention_id(member.id)}")
+
+
+async def love_user(ctx):
+    user = ctx.message.author.id
+    new_msg = await ctx.channel.send(f"I love you {mention_id(user)}")
+    await new_msg.add_reaction('❤️')
+
+
