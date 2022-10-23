@@ -51,7 +51,6 @@ async def on_message_delete(message):
         await message.channel.send('Vi lo que borraste, picaron')
 
 
-
 # This block is to avoid errors when using a non-existent command
 @bot.event
 async def on_command_error(ctx, error):
