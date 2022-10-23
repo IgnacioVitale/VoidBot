@@ -32,15 +32,3 @@ async def love_user(ctx):
     new_msg = await ctx.channel.send(f"I love you {mention_id(user)}")
     await new_msg.add_reaction('❤️')
 
-
-async def dice_roll(ctx):
-    result_of_the_dices_throws = 0
-    message_of_user = ctx.message.content
-    await ctx.channel.send(message_of_user)
-    quantity_of_throws = message_of_user[6:7]
-    dice_thrown = message_of_user[8:]
-    for i in range(0, int(quantity_of_throws)):
-        result_of_the_dices_throws += random.choice(range(1, int(dice_thrown)))
-    await ctx.channel.send(
-        f"you have thrown {int(quantity_of_throws)} dice/s of {dice_thrown} "
-        f"faces, and they sum {result_of_the_dices_throws}")
