@@ -33,6 +33,11 @@ async def allstar(ctx):
     await all_star(ctx)
 
 
+@bot.command()
+async def hello(ctx):
+    await hello_there(ctx)
+
+
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
@@ -44,6 +49,7 @@ async def on_message_delete(message):
         await message.channel.send('Me estan censurando en vivo')
     else:
         await message.channel.send('Vi lo que borraste, picaron')
+
 
 
 # This block is to avoid errors when using a non-existent command
