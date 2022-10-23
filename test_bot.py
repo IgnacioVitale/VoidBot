@@ -33,11 +33,6 @@ async def allstar(ctx):
     await all_star(ctx)
 
 
-@bot.command()
-async def roll(ctx):
-    await dice_roll(ctx)
-
-
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
