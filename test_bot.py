@@ -11,7 +11,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 
-bot_prefix = './'
+bot_prefix = '!'
 bot = commands.Bot(intents=intents, command_prefix=bot_prefix)
 
 

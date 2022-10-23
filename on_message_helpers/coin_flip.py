@@ -1,6 +1,6 @@
 import random
 
-from DiscordBot.utils import mention_id
+from utils import mention_id
 
 
 async def coin_flip(ctx):
