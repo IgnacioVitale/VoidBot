@@ -10,6 +10,8 @@
 | git checkout -b "a name of your will" | Creates a Branch and moves you to that new branch.                                                                |
 | git branch -d "branch"                | This will delete the branch you choose.                                                                           |
 | git branch -a                         | Shows you all the branchs.                                                                                        |
+| git reset --soft HEAD~1               | This rolls back your last commit but saves your changes.                                                          |
+| git reset --hard HEAD~1               | This rolls back every change you made since the last commit.                                                      |
 #
 #### Pushing something to GitHub
 
