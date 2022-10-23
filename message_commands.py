@@ -45,7 +45,7 @@ async def hello_there(ctx):
         user_channel = user_in_vc.channel
         vc = await user_channel.connect()
 
-        # This is a 'Future', and follows the design as suggest by the discord.py team.
+        # This is a 'Future', and follows the design as suggested by the discord.py team.
         # Read more about this here: https://discordpy.readthedocs.io/en/latest/faq.html#how-do-i-pass-a-coroutine-to-the-player-s-after-function
         def exit_future(error):
             coro = vc.disconnect()
