@@ -3,7 +3,6 @@ from discord.ext import commands
 from dotenv import dotenv_values
 
 from message_commands import *
-from utils import *
 
 config = dotenv_values('.env')
 intents = discord.Intents.default()
@@ -17,7 +16,7 @@ bot = commands.Bot(intents=intents, command_prefix=bot_prefix)
 @bot.command()
 async def greet(ctx, *names):
     await greet_user(ctx, *names)
-   
+
 
 @bot.command()
 async def love(ctx: commands.Context):
@@ -32,6 +31,11 @@ async def coinflip(ctx):
 @bot.command()
 async def allstar(ctx):
     await all_star(ctx)
+
+
+@bot.command()
+async def roll(ctx):
+    await dice_roll(ctx)
 
 
 @bot.event
