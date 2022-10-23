@@ -15,7 +15,6 @@
 #
 #### Pushing something to GitHub
 
-
 |     | Commands                             | What it does                                                                                                                                         |
 |-----|--------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 1º  | git add "name of the file"           | 1º First step: Uploads from your computer to the online repository of git hub. (You can also use "git add ." to add all the modifications you made). | 
