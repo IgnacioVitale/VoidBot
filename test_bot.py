@@ -33,6 +33,11 @@ async def allstar(ctx):
     await all_star(ctx)
 
 
+@bot.command()
+async def hello(ctx):
+    await hello_there(ctx)
+
+
 @bot.event
 async def on_ready():
     print(f'We have logged in as {bot.user}')
