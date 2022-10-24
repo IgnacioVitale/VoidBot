@@ -1,7 +1,7 @@
-import discord
 from discord.ext import commands
 from dotenv import dotenv_values
 
+from audio_commands import *
 from message_commands import *
 
 config = dotenv_values('.env')
@@ -36,6 +36,16 @@ async def allstar(ctx):
 @bot.command()
 async def hello(ctx):
     await hello_there(ctx)
+
+
+@bot.command()
+async def play(ctx, *url):
+    await stream(bot, ctx, *url)
+
+
+@bot.command()
+async def stop(ctx):
+    await stop_audio(bot, ctx)
 
 
 @bot.event
