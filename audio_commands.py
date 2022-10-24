@@ -3,6 +3,8 @@ import asyncio
 import discord
 import youtube_dl
 
+
+# TODO: MAKE THIS BETTER
 ytdl_format_options = {
     'format': 'bestaudio/best',
     'outtmpl': '%(extractor)s-%(id)s-%(title)s.%(ext)s',
