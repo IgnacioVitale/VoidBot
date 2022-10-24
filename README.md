@@ -13,6 +13,10 @@
     pip install python-dotenv
     ```
 - Create a .env file and ask for the bot key
+- Download the ffmpeg package from https://github.com/BtbN/FFmpeg-Builds/releases
+- Uncompress the file and change the name of the folder to ffmpeg
+- Add to the PATH in environment variables the path to said folder/bin, eg:
+  C:\ffmpeg\bin
 
 ### How to run
 Open a terminal in the bot folder
