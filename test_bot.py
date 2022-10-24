@@ -37,9 +37,11 @@ async def allstar(ctx):
 async def hello(ctx):
     await hello_there(ctx)
 
+
 @bot.command()
 async def play(ctx, *url):
     await stream(bot, ctx, *url)
+
 
 @bot.command()
 async def stop(ctx):
