@@ -27,5 +27,5 @@ Run the following command: py -3 test_bot.py
 
 ### Resources
 
-https://discordpy.readthedocs.io/en/latest/index.html
+https://discordpy.readthedocs.io/en/latest/index.html \
 https://discordpy.readthedocs.io/en/stable/api.html#messages
