@@ -32,6 +32,9 @@ async def coinflip(ctx):
 async def allstar(ctx):
     await all_star(ctx)
 
+@bot.command()
+async def shrek(ctx):
+    await shrekify_chat(ctx)
 
 @bot.command()
 async def hello(ctx):
