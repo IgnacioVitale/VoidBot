@@ -43,6 +43,7 @@ async def hello(ctx):
 
 @bot.command()
 async def play(ctx, *url):
+    await add_to_queue(ctx, *url)
     await stream(bot, ctx, *url)
 
 
