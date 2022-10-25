@@ -1,6 +1,8 @@
 import asyncio
+from asyncio import sleep
 
 import discord
+from discord.ext import commands
 import youtube_dl
 
 
@@ -46,7 +48,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
 
 
-async def stream(bot, ctx, *url):
+async def stream(bot, ctx:discord.ext.commands.Context, *url):
     query = ' '.join(url)
     user_in_vc = ctx.message.author.voice
     user_channel = user_in_vc.channel
@@ -57,6 +59,9 @@ async def stream(bot, ctx, *url):
         vc.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
 
     await ctx.send('Now playing: {}'.format(player.title))
+    while vc.is_playing():
+        await sleep(1)
+    await ctx.voice_client.disconnect()
 
 
 async def stop_audio(bot, ctx):
