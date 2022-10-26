@@ -2,7 +2,7 @@ import random
 import re
 
 import discord
-from discord.ext import commands
+import discord.ext.commands
 
 from utils import mention_id
 
@@ -22,17 +22,20 @@ async def coin_toss(ctx):
 
 
 async def dice_roll(ctx, text=None):
-    result_of_throws = 0
+    result = 0
     example_for_the_text = "2d6 . First number for the quantity, second number for the faces."
-    if not re.match(r"\d+d\d+", text):
+    if not text or not re.match(r"\d+d\d+", text):
         await ctx.channel.send(f"Wrong format, the correct format is ---> {example_for_the_text}")
     else:
         quantity_of_dice = int(text.split("d")[0])
         faces_of_dice = int(text.split("d")[1])
-        for i in range(0, quantity_of_dice):
-            result_of_throws += random.choice(range(1, (faces_of_dice + 1)))
+        if not (faces_of_dice and quantity_of_dice):
+         await ctx.channel.send(f" {mention_id(ctx.message.author.id)} rolls 0")
+         return
+        for _ in range(0, quantity_of_dice):
+            result += random.randint(1, faces_of_dice)
         await ctx.channel.send(
-            f" {mention_id(ctx.message.author.id)} rolls {result_of_throws}")
+            f" {mention_id(ctx.message.author.id)} rolls {result}")
 
 
 async def greet_user(ctx, *names):
