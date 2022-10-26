@@ -1,9 +1,8 @@
+import json
 import os
 
 import requests
-import json
-
-from dotenv import dotenv_values, load_dotenv
+from dotenv import load_dotenv
 
 load_dotenv()
 url = 'https://api.jsonbin.io/v3/b/635968a72b3499323beb7dee?meta=false'
@@ -29,9 +28,8 @@ def update_counter():
     counter = json_txt["record"]["counter"]
     return counter
 
+
 def reset_counter():
     update_json = {"counter": 0}
     requests.put(url, json=update_json, headers=headers)
     print("The counter has been reset")
-
-reset_counter()
