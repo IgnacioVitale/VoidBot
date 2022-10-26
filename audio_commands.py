@@ -1,10 +1,11 @@
 import asyncio
-from asyncio import sleep
-
 import discord
+from helpers.song_queue import SongQueue
 from discord.ext import commands
+from asyncio import sleep
 import youtube_dl
 
+song_queue = SongQueue()
 
 # TODO: MAKE THIS BETTER
 ytdl_format_options = {
@@ -49,23 +50,39 @@ class YTDLSource(discord.PCMVolumeTransformer):
 
 
 async def stream(bot, ctx:discord.ext.commands.Context, *url):
-    query = ' '.join(url)
-    user_in_vc = ctx.message.author.voice
-    user_channel = user_in_vc.channel
-    vc = await user_channel.connect()
+    if song_queue.is_playing:
+        return
+    while song_queue.q:
+        song_queue.is_playing = True
+        query = ' '.join(song_queue.pop_upcoming())
+        user_in_vc = ctx.message.author.voice
+        user_channel = user_in_vc.channel
+        try:
+            vc = await user_channel.connect()
+        except:
+            pass
+        async with ctx.typing():
+            player = await YTDLSource.from_url(query, loop=bot.loop, stream=True)
+            vc.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
 
-    async with ctx.typing():
-        player = await YTDLSource.from_url(query, loop=bot.loop, stream=True)
-        vc.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
+        await ctx.send('Now playing: {}'.format(player.title))
+        while vc.is_playing():
+            await sleep(1)
+    if ctx.voice_client:
+        await ctx.voice_client.disconnect()
+    song_queue.is_playing = False
 
-    await ctx.send('Now playing: {}'.format(player.title))
-    while vc.is_playing():
-        await sleep(1)
-    await ctx.voice_client.disconnect()
+async def add_to_queue(ctx: discord.ext.commands.Context, *url):
+    song_queue.add_song(url)
+    await ctx.channel.send("Added to queue!")
 
 
-async def stop_audio(bot, ctx):
-    await ctx.voice_client.disconnect()
+async def stop_audio(bot, ctx: discord.ext.commands.Context):
+    if ctx.voice_client:
+        print('i am connected! disconecting . . .')
+        await ctx.voice_client.disconnect()
+    song_queue.empty()
+    
 
 
 async def hello_there(ctx):

@@ -38,11 +38,13 @@ async def shrek(ctx):
 
 @bot.command()
 async def hello(ctx):
+    await stop_audio(bot, ctx)
     await hello_there(ctx)
 
 
 @bot.command()
 async def play(ctx, *url):
+    await add_to_queue(ctx, *url)
     await stream(bot, ctx, *url)
 
 
