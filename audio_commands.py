@@ -1,9 +1,12 @@
 import asyncio
-import discord
-from helpers.song_queue import SongQueue
-from discord.ext import commands
 from asyncio import sleep
+
+import discord
 import youtube_dl
+from discord.ext import commands
+
+from helpers.song_queue import SongQueue
+from utils import mention_id
 
 song_queue = SongQueue()
 
@@ -49,14 +52,13 @@ class YTDLSource(discord.PCMVolumeTransformer):
         return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)
 
 
-async def stream(bot, ctx:discord.ext.commands.Context, *url):
+async def stream(bot, ctx: discord.ext.commands.Context, *url):
     if song_queue.is_playing:
         return
     while song_queue.q:
         song_queue.is_playing = True
         query = ' '.join(song_queue.pop_upcoming())
-        user_in_vc = ctx.message.author.voice
-        user_channel = user_in_vc.channel
+        user_channel = ctx.message.author.voice.channel
         try:
             vc = await user_channel.connect()
         except:
@@ -72,27 +74,31 @@ async def stream(bot, ctx:discord.ext.commands.Context, *url):
         await ctx.voice_client.disconnect()
     song_queue.is_playing = False
 
+
 async def add_to_queue(ctx: discord.ext.commands.Context, *url):
     song_queue.add_song(url)
-    await ctx.channel.send("Added to queue!")
+    await ctx.channel.send(f"Query {' '.join(url)} added to queue!")
 
 
-async def stop_audio(bot, ctx: discord.ext.commands.Context):
+async def stop_audio(ctx: discord.ext.commands.Context):
     if ctx.voice_client:
-        print('i am connected! disconecting . . .')
+        print('Disconecting . . .')
         await ctx.voice_client.disconnect()
     song_queue.empty()
-    
 
 
 async def hello_there(ctx):
     # User that requests the greeting
     greeted_user_id = ctx.message.author.id
     # This is hardcoded for now, we'll evaluate other options later.
-    source = await discord.FFmpegOpusAudio.from_probe("audio_files/shrek_hello_there.m4a", method='fallback')
     # First, we check if the user calling is in a VC.
     user_in_vc = ctx.message.author.voice
-    if user_in_vc:
+    if not user_in_vc:
+        await ctx.channel.send(
+            f"Hey {mention_id(greeted_user_id)}, you're not in a VC! Please join one so i can greet you 💌 :)!")
+    else:
+        source = await discord.FFmpegOpusAudio.from_probe("audio_files/shrek_hello_there.m4a", method='fallback')
+
         user_channel = user_in_vc.channel
         vc = await user_channel.connect()
 
@@ -102,11 +108,10 @@ async def hello_there(ctx):
             coro = vc.disconnect()
             loop = vc.loop
             future = asyncio.run_coroutine_threadsafe(coro, loop=loop)
-            try: 
+            try:
                 future.result()
             except:
                 pass
-                
+
         vc.play(source, after=exit_future)
-    else:
-        await ctx.channel.send(f"Hey {mention_id(greeted_user_id)}, you're not in a VC! Please join one so i can greet you 💌 :)!")
+
