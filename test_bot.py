@@ -1,6 +1,7 @@
 from dotenv import dotenv_values
 
 from audio_commands import *
+from jsondb_commands import *
 from message_commands import *
 
 config = dotenv_values('.env')
@@ -40,7 +41,7 @@ async def allstar(ctx):
 @bot.command()
 async def shrek(ctx):
     await shrekify_chat(ctx)
-
+    await show_counter(ctx)
 
 @bot.command()
 async def hello(ctx):
