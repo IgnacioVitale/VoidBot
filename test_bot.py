@@ -22,6 +22,9 @@ async def greet(ctx, *names):
 async def love(ctx: commands.Context):
     await love_user(ctx)
 
+@bot.command()
+async def droll(ctx, text=None):
+    await dice_roll(ctx, text)
 
 @bot.command()
 async def coinflip(ctx):
