@@ -20,10 +20,9 @@ async def coin_flip(ctx):
 
 
 async def dice_roll(ctx, text=None):
-    regex = r"(\d{1,}d{1}\d{1,})"
     result_of_throws = 0
     example_for_the_text = "2d6 . First number for the quantity, second number for the faces."
-    if text is None:
+    if not re.match(r"\d{1,}d\d{1,}", text):
         await ctx.channel.send(f"You need to put a value for the dice. Like this ---> {example_for_the_text}")
     else:
         quantity_of_dice = int(text.split(sep="d")[0])
