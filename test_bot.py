@@ -1,4 +1,3 @@
-from discord.ext import commands
 from dotenv import dotenv_values
 
 from audio_commands import *
@@ -22,46 +21,52 @@ async def greet(ctx, *names):
 async def love(ctx: commands.Context):
     await love_user(ctx)
 
+
 @bot.command()
 async def droll(ctx, text=None):
     await dice_roll(ctx, text)
 
+
 @bot.command()
-async def coinflip(ctx):
-    await coin_flip(ctx)
+async def cointoss(ctx):
+    await coin_toss(ctx)
 
 
 @bot.command()
 async def allstar(ctx):
     await all_star(ctx)
 
+
 @bot.command()
 async def shrek(ctx):
     await shrekify_chat(ctx)
 
+
 @bot.command()
 async def hello(ctx):
-    await stop_audio(bot, ctx)
+    await stop_audio(ctx)
     await hello_there(ctx)
 
 
 @bot.command()
 async def play(ctx, *url):
+    if not url:
+        return
     await add_to_queue(ctx, *url)
     await stream(bot, ctx, *url)
 
 
 @bot.command()
 async def stop(ctx):
-    await stop_audio(bot, ctx)
+    await stop_audio(ctx)
 
 
 @bot.event
 async def on_ready():
-    print(f'We have logged in as {bot.user}')
+    print(f'Logged in as {bot.user}')
 
 
-@bot.event
+# @bot.event
 async def on_message_delete(message):
     if message.author == bot.user:
         await message.channel.send('Me estan censurando en vivo')

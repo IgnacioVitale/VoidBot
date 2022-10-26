@@ -1,5 +1,6 @@
 from collections import deque
 
+
 class SongQueue:
     def __init__(self) -> None:
         self.q = deque()
@@ -11,11 +12,8 @@ class SongQueue:
     def pop_upcoming(self):
         return self.q.popleft()
 
-    def remove_at_index(self, index):
-        return self.q.pop(index)
-    
+    def remove_at_index(self):
+        return self.q.pop()
+
     def empty(self):
         self.q = deque()
-
-    
-
