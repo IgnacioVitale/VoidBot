@@ -1,8 +1,8 @@
 import asyncio
-from asyncio import sleep
-from utils import SongQueue
 import discord
+from helpers.song_queue import SongQueue
 from discord.ext import commands
+from asyncio import sleep
 import youtube_dl
 
 song_queue = SongQueue()
@@ -68,7 +68,8 @@ async def stream(bot, ctx:discord.ext.commands.Context, *url):
         await ctx.send('Now playing: {}'.format(player.title))
         while vc.is_playing():
             await sleep(1)
-    await ctx.voice_client.disconnect()
+    if ctx.voice_client:
+        await ctx.voice_client.disconnect()
     song_queue.is_playing = False
 
 async def add_to_queue(ctx: discord.ext.commands.Context, *url):
@@ -77,7 +78,11 @@ async def add_to_queue(ctx: discord.ext.commands.Context, *url):
 
 
 async def stop_audio(bot, ctx: discord.ext.commands.Context):
-    await ctx.voice_client.disconnect()
+    if ctx.voice_client:
+        print('i am connected! disconecting . . .')
+        await ctx.voice_client.disconnect()
+    song_queue.empty()
+    
 
 
 async def hello_there(ctx):

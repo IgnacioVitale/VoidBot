@@ -38,6 +38,7 @@ async def shrek(ctx):
 
 @bot.command()
 async def hello(ctx):
+    await stop_audio(bot, ctx)
     await hello_there(ctx)
 
 
