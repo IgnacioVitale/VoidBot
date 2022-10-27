@@ -61,6 +61,11 @@ async def play(ctx, *url):
 async def stop(ctx):
     await stop_audio(ctx)
 
+@bot.command()
+async def chess(ctx):
+    await chess_url(ctx)
+
+
 
 @bot.event
 async def on_ready():
