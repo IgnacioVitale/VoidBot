@@ -1,7 +1,6 @@
 import random
 import re
 
-import discord
 import discord.ext.commands
 
 from utils import mention_id
@@ -30,8 +29,8 @@ async def dice_roll(ctx, text=None):
         quantity_of_dice = int(text.split("d")[0])
         faces_of_dice = int(text.split("d")[1])
         if not (faces_of_dice and quantity_of_dice):
-         await ctx.channel.send(f" {mention_id(ctx.message.author.id)} rolls 0")
-         return
+            await ctx.channel.send(f" {mention_id(ctx.message.author.id)} rolls 0")
+            return
         for _ in range(0, quantity_of_dice):
             result += random.randint(1, faces_of_dice)
         await ctx.channel.send(

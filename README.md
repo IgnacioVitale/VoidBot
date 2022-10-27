@@ -5,16 +5,18 @@
 ### Setup
 
 - Install python 3.8 or higher
+- Install git
 - Install discord.py
   ```sh
-  py -3 -m pip install -U discord.py
+  py -m pip install -U discord.py
+  py -m pip install -U discord.py[voice]
   ```
-- Install (python-dotenv)
+- Install other dependencies
   ```sh
-    pip install python-dotenv
-    pip install youtube_dl
+    py -m pip install python-dotenv
+    py -m pip install youtube_dl
   ```
-- Create a .env file and ask for the bot key
+- Create a .env file and ask for the bot key and the json key
 - Download the ffmpeg-master-latest-win64-gpl.zip package from https://github.com/BtbN/FFmpeg-Builds/releases
 - Uncompress the file and change the name of the folder to ffmpeg
 - Add to the PATH in environment variables the path to said folder/bin, eg:
