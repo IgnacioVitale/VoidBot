@@ -83,7 +83,7 @@ async def chess_url(ctx):
 
 async def city_weather(ctx, *city):
     if not city:
-        await ctx.channel.send(f"The weather commnad requires a city")
+        await ctx.channel.send(f"The weather commmand requires a city")
         return
     city = ' '.join(city)
     message, icon = get_weather(city)
