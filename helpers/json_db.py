@@ -76,5 +76,5 @@ def backup_db():
     req = requests.get(url, json=None, headers=headers)
     # We load said that to be able to access it
     update_json = json.loads(req.text)
-    with open("../db_backup.json", "w") as to:
+    with open("db_backup.json", "w") as to:
         to.write(json.dumps(update_json, indent=4))
