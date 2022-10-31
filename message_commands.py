@@ -4,6 +4,7 @@ import re
 import discord.ext.commands
 
 from helpers.lichess import get_lichess_link
+from helpers.weather import get_weather
 from utils import mention_id
 
 
@@ -78,3 +79,14 @@ async def shrekify_chat(ctx):
 
 async def chess_url(ctx):
     await ctx.channel.send(f"♘ {get_lichess_link()} ♝")
+
+
+async def city_weather(ctx, *city):
+    if not city:
+        await ctx.channel.send(f"The weather commnad requires a city")
+        return
+    city = ' '.join(city)
+    message, icon = get_weather(city)
+    msg = await ctx.channel.send(message)
+    if icon:
+        await msg.add_reaction(icon)

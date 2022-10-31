@@ -25,7 +25,7 @@
 ### How to run
 
 Open a terminal in the bot folder
-Run the following command: py -3 test_bot.py
+Run the following command: py -3 void_bot.py
 
 ### Resources
 

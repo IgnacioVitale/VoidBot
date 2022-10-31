@@ -63,15 +63,20 @@ async def play(ctx, *url):
 async def stop(ctx):
     await stop_audio(ctx)
 
+
 @bot.command()
 async def chess(ctx):
     await chess_url(ctx)
 
 
-
 @bot.command()
 async def king(ctx):
     await update_king(ctx)
+
+
+@bot.command()
+async def weather(ctx, *city):
+    await city_weather(ctx, *city)
 
 
 @bot.event
