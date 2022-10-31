@@ -61,7 +61,6 @@ def get_icon(weather):
         'rain': '🌧️',
         'drizzle': '🌦️',
         'thunderstorm': '⛈️'
-
     }
     if weather['description'].lower() in icons:
         return icons[weather['description'].lower()]
