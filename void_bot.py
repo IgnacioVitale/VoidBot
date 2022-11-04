@@ -1,6 +1,8 @@
+from discord.ext import tasks
 from dotenv import dotenv_values
 
 from audio_commands import *
+from helpers.daily_eth import daily_eth
 from helpers.json_db import update_king
 from jsondb_commands import *
 from message_commands import *
@@ -82,6 +84,7 @@ async def weather(ctx, *city):
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user}')
+    eth_task.start()
 
 
 # @bot.event
@@ -98,6 +101,11 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         return
     raise error
+
+
+@tasks.loop(hours=24)
+async def eth_task():
+    await daily_eth(bot)
 
 
 bot.run(config['DISCORD_API_KEY'])
